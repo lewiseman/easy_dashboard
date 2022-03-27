@@ -1,3 +1,13 @@
+# Easy Dashboard
+
+[![Pub](https://img.shields.io/pub/v/flutter_snake_navigationbar.svg)](https://pub.dev/packages/flutter_snake_navigationbar)
+
+Provides an easy way to build dashboard layout for your app , but still yet very customizable .
+
+|DeskTop	|Tablet		|Mobile		|
+|:------------:|:------------:|:-------------:|
+|	[![](https://raw.githubusercontent.com/lewiseman/assets/master/easydb-dsk-open.png)](https://github.com/lewiseman/easy_dashboard/tree/master/example/lib) |	[![](https://raw.githubusercontent.com/lewiseman/assets/master/easydb-tb.png)](https://github.com/lewiseman/easy_dashboard/tree/master/example/lib)  | [![](https://raw.githubusercontent.com/lewiseman/assets/master/easydb-mb-cd.png)](https://github.com/lewiseman/easy_dashboard/tree/master/example/lib) [![](https://raw.githubusercontent.com/lewiseman/assets/master/easydb-mbop.png)](https://github.com/lewiseman/easy_dashboard/tree/master/example/lib) |
+
 <!-- 
 This README describes the package. If you publish this package to pub.dev,
 this README's contents appear on the landing page for your package.

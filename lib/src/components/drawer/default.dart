@@ -13,14 +13,14 @@ class EasyDrawer extends StatefulWidget {
   final SideBox? bottomWidget;
   final SideBox? bottomSmallWidget;
   final Size size;
-  final Color selectedColor;
-  final Color selectedTextColor;
-  final Color selectedTileColor;
-  final Color tileColor;
-  final Color selectedIconColor;
-  final Color textColor;
-  final Color iconColor;
-  final Color hoverColor;
+  final Color? selectedColor;
+  final Color? selectedTextColor;
+  final Color? selectedTileColor;
+  final Color? tileColor;
+  final Color? selectedIconColor;
+  final Color? textColor;
+  final Color? iconColor;
+  final Color? hoverColor;
   const EasyDrawer({
     Key? key,
     this.tiles,
@@ -29,14 +29,14 @@ class EasyDrawer extends StatefulWidget {
     this.topSmallWidget,
     this.bottomSmallWidget,
     this.onTileTapped,
-    this.tileColor = Colors.grey,
-    this.textColor = Colors.black,
-    this.iconColor = const Color(0XFF1A2C42),
-    this.selectedColor = const Color(0XFF1A2C42),
-    this.selectedTileColor = const Color(0XFFC0C5CA),
-    this.selectedTextColor = Colors.white,
-    this.selectedIconColor = const Color(0XFF1A2C42),
-    this.hoverColor = Colors.grey,
+    this.tileColor,
+    this.textColor,
+    this.iconColor,
+    this.selectedColor,
+    this.selectedTileColor,
+    this.selectedTextColor,
+    this.selectedIconColor,
+    this.hoverColor,
     required this.size,
   }) : super(key: key);
 

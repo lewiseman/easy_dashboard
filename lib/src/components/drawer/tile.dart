@@ -5,30 +5,30 @@ class DrawerTile extends StatelessWidget {
   final bool showTitle;
   final bool isSelected;
   final SideBarTile tile;
-  final Color selectedColor;
-  final Color selectedTextColor;
-  final Color selectedTileColor;
-  final Color tileColor;
-  final Color textColor;
-  final Color iconColor;
-  final Color selectedIconColor;
-  final Color hoverColor;
+  final Color? selectedColor;
+  final Color? selectedTextColor;
+  final Color? selectedTileColor;
+  final Color? tileColor;
+  final Color? textColor;
+  final Color? iconColor;
+  final Color? selectedIconColor;
+  final Color? hoverColor;
 
   final VoidCallback? onTap;
   const DrawerTile({
     Key? key,
     this.isSelected = false,
     required this.tile,
-    required this.selectedColor,
-    required this.selectedTileColor,
+    this.selectedColor,
+    this.selectedTileColor,
     this.showTitle = false,
     this.onTap,
-    required this.tileColor,
-    required this.selectedTextColor,
-    required this.textColor,
-    required this.selectedIconColor,
-    required this.iconColor,
-    required this.hoverColor,
+    this.tileColor,
+    this.selectedTextColor,
+    this.textColor,
+    this.selectedIconColor,
+    this.iconColor,
+    this.hoverColor,
   }) : super(key: key);
 
   @override

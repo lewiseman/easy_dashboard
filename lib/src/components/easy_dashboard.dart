@@ -10,35 +10,95 @@ import 'package:easy_dashboard/src/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// ## Easy Dashboard
-/// A simple yet powerful widget for creating Dashboards.
-///
 class EasyDashboard extends StatelessWidget {
+  /// Use [EasyAppController] to control the [EasyDashboard] body widget .
+  ///  Use this to set the initial body widget.
   final EasyAppController controller;
   final EasyBody? body;
+
+  /// The Duration of the animation when the [EasyDashboard] is opened or closed among others.
   final Duration duration;
+
+  /// The pixels at which the ui breaks into the mobile view
   final double mobileBreakpoint;
+
+  /// The pixels at which the ui breaks into the tablet view
   final double tabletBreakpoint;
+
+  /// General background color of the [EasyDashboard]
   final Color backgroundColor;
+
+  ///  Display properties while in tablet view such as dashboard style
   final MobileView mobileView;
+
+  /// Display properties while in tablet view such as dashboard style
   final TabletView tabletView;
+
+  /// Display properties while in desktop view such as dashboard style
   final DesktopView desktopView;
+
+  /// An drawer widget that will be displayed on the left side of the [EasyDashboard].
+  ///  You can use the pre-built [EasyDrawer] to create a faster easier drawer .
   final DrawerBuilder drawer;
+
+  /// What to show when the tablet break point is reached,
+  /// change it to override or persist a current view.
+  /// Example:
+  /// ```dart
+  /// tabletMode = EasyDeviceMode.mobile
+  /// tabletMode = EasyDeviceMode.desktop
+  /// ```
+  ///
   final EasyDeviceMode tabletMode;
+
+  /// What to show when the mobile break point is reached,
+  /// change it to override or persist a current view.
+  /// Example:
+  /// ```dart
+  /// mobileMode = EasyDeviceMode.tablet
+  /// mobileMode = EasyDeviceMode.desktop
+  /// ```
+  ///
   final EasyDeviceMode mobileMode;
+
+  /// What to show when the desktop break point is reached,
+  /// change it to override or persist a current view.
+  /// Example:
+  /// ```dart
+  /// desktopMode = EasyDeviceMode.mobile
+  /// desktopMode = EasyDeviceMode.tablet
+  /// ```
+  ///
   final EasyDeviceMode desktopMode;
   final FloatingActionButton? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final FloatingActionButtonAnimator? floatingActionButtonAnimator;
+
+  /// The height of the app bar
   final double appBarHeight;
+
+  /// The icon that will control the responsive navigation of the [EasyDashboard]
   final Icon navigationIcon;
+
+  /// Whether or not the appbar title is centered
   final bool centerTitle;
+
+  /// The splash radius of the navigation icon when pressed
   final double navigationIconSplashRadius;
+
+  /// The color of the app bar
   final Color appBarColor;
+
+  /// The color of the sidebar navigation
   final Color sideBarColor;
+
+  /// A list of Widgets for the [AppBar] actions
   final List<Widget>? appBarActions;
   final SystemUiOverlayStyle? systemOverlayStyle;
 
+  /// ## Easy Dashboard
+  /// A simple yet powerful widget for creating fast Dashboards.
+  ///
   const EasyDashboard({
     Key? key,
     required this.controller,
@@ -72,6 +132,7 @@ class EasyDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
+      backgroundColor: backgroundColor,
       floatingActionButton: floatingActionButton,
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

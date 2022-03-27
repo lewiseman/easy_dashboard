@@ -10,6 +10,9 @@ import 'package:easy_dashboard/src/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// ## Easy Dashboard
+/// A simple yet powerful widget for creating Dashboards.
+///
 class EasyDashboard extends StatelessWidget {
   final EasyAppController controller;
   final EasyBody? body;
@@ -124,7 +127,7 @@ class EasyDashboard extends StatelessWidget {
           backgroundColor: backgroundColor,
           drawer: drawer,
           appBarColor: appBarColor,
-           sideBarColor: sideBarColor,
+          sideBarColor: sideBarColor,
           centerTitle: centerTitle,
           constraints: constraints,
           duration: duration,

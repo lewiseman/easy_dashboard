@@ -28,7 +28,6 @@ class DashBoard extends StatelessWidget {
     intialBody: EasyBody(child: tile1.body, title: tile1.title),
   );
 
- 
   @override
   Widget build(BuildContext context) {
     return EasyDashboard(
@@ -52,9 +51,9 @@ class DashBoard extends StatelessWidget {
           hoverColor: Colors.grey.shade300,
           tileColor: Colors.grey.shade100,
           selectedColor: Colors.black.withGreen(80),
-          selectedIconColor: const Color.fromARGB(255, 2, 105, 95),
+          selectedIconColor: Colors.white,
           textColor: Colors.black.withGreen(20),
-          selectedTileColor: const Color(0XFFC0C5CA),
+          selectedTileColor: Colors.teal.shade400.withOpacity(.8),
           tiles: tiles,
           topWidget: SideBox(
             scrollable: true,

@@ -96,7 +96,7 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
                           return widget.controller.page.title;
                         },
                       ),
-                      Spacer(),
+                      const Spacer(),
                       ...?widget.appBarActions,
                     ],
                   ),
@@ -205,7 +205,7 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
                           return widget.controller.page.title;
                         },
                       ),
-                      Spacer(),
+                      const Spacer(),
                       ...?widget.appBarActions,
                     ],
                   ),

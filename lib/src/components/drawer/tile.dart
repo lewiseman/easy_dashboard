@@ -6,6 +6,7 @@ class DrawerTile extends StatelessWidget {
   final bool isSelected;
   final SideBarTile tile;
   final Color selectedColor;
+  final Color selectedTextColor;
   final Color selectedTileColor;
   final Color tileColor;
   final Color textColor;
@@ -23,6 +24,7 @@ class DrawerTile extends StatelessWidget {
     this.showTitle = false,
     this.onTap,
     required this.tileColor,
+    required this.selectedTextColor,
     required this.textColor,
     required this.selectedIconColor,
     required this.iconColor,
@@ -54,7 +56,14 @@ class DrawerTile extends StatelessWidget {
             tile.icon,
             color: isSelected ? selectedIconColor : iconColor,
           ),
-          title: showTitle ? Text(tile.name) : null,
+          title: showTitle
+              ? Text(
+                  tile.name,
+                  style: TextStyle(
+                    color: isSelected ? selectedTextColor : textColor,
+                  ),
+                )
+              : null,
           onTap: () {
             onTap?.call();
           },

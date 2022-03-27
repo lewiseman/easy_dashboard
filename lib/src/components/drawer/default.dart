@@ -14,6 +14,7 @@ class EasyDrawer extends StatefulWidget {
   final SideBox? bottomSmallWidget;
   final Size size;
   final Color selectedColor;
+  final Color selectedTextColor;
   final Color selectedTileColor;
   final Color tileColor;
   final Color selectedIconColor;
@@ -33,6 +34,7 @@ class EasyDrawer extends StatefulWidget {
     this.iconColor = const Color(0XFF1A2C42),
     this.selectedColor = const Color(0XFF1A2C42),
     this.selectedTileColor = const Color(0XFFC0C5CA),
+    this.selectedTextColor = Colors.white,
     this.selectedIconColor = const Color(0XFF1A2C42),
     this.hoverColor = Colors.grey,
     required this.size,
@@ -59,12 +61,6 @@ class _EasyDrawerState extends State<EasyDrawer> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // if (((widget.topWidget?.scrollable ?? false) == true) &&
-                //     showFull)
-                //   SizedBox(
-                //     height: widget.topWidget?.height,
-                //     child: widget.topWidget?.child,
-                //   ),
                 getTopWidget(
                       scrollBig: true,
                       scrollSmall: true,
@@ -92,6 +88,7 @@ class _EasyDrawerState extends State<EasyDrawer> {
                           selectedIconColor: widget.selectedIconColor,
                           hoverColor: widget.hoverColor,
                           iconColor: widget.iconColor,
+                          selectedTextColor: widget.selectedTextColor,
                           selectedColor: widget.selectedColor,
                           selectedTileColor: widget.selectedTileColor,
                           textColor: widget.textColor,

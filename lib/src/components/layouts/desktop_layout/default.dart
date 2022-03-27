@@ -95,7 +95,7 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
                           return widget.controller.page.title;
                         },
                       ),
-                      Spacer(),
+                      const Spacer(),
                       ...?widget.appBarActions,
                     ],
                   ),
@@ -204,7 +204,7 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
                           return widget.controller.page.title;
                         },
                       ),
-                      Spacer(),
+                      const Spacer(),
                       ...?widget.appBarActions,
                     ],
                   ),

@@ -1,7 +1,8 @@
 name: easy_dashboard
-description: A new Flutter package project.
+description: A package to help easily crate dashboard layouts
 version: 0.0.1
-homepage:
+homepage: https://github.com/lewiseman/easy_dashboard
+issue_tracker: https://github.com/lewiseman/easy_dashboard/issues
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
@@ -16,12 +17,8 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^1.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
 flutter:
-
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

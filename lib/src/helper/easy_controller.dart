@@ -1,6 +1,8 @@
 import 'package:easy_dashboard/src/models/body_model.dart';
 import 'package:flutter/material.dart';
 
+/// A controller to help with the [EasyDashboard] elements .
+/// Give more control to the user
 class EasyAppController extends ChangeNotifier {
   final EasyBody? intialBody;
   EasyAppController({

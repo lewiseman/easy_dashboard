@@ -7,20 +7,52 @@ import 'package:flutter/material.dart';
 
 class EasyDrawer extends StatefulWidget {
   final List<SideTile>? tiles;
+
+  /// actions to be taken when a tile is tapped
+  /// This is mostly switching the body of the dashboard
   final ValueChanged<EasyBody>? onTileTapped;
+
+  /// widget to display at the top when the drawer is fully opened
   final SideBox? topWidget;
+
+  /// widget to display at the top when the drawer is partially opened
   final SideBox? topSmallWidget;
+
+  /// widget to display at the bottom when the drawer is fully opened
   final SideBox? bottomWidget;
+
+  /// widget to display at the bottom when the drawer is partially opened
   final SideBox? bottomSmallWidget;
+
+  /// the size of the drawer when fully opened
   final Size size;
+
+  /// tile selected color
   final Color? selectedColor;
+
+  /// tile text selected color
   final Color? selectedTextColor;
+
+  /// selected tile color
   final Color? selectedTileColor;
+
+  /// tile color
   final Color? tileColor;
+
+  /// selected icon color
   final Color? selectedIconColor;
+
+  /// text color
   final Color? textColor;
+
+  /// icon color
   final Color? iconColor;
+
+  /// hover color
   final Color? hoverColor;
+
+  /// ## Easy Drawer
+  /// An optional drawer to use if you do not wish to build one yourself.
   const EasyDrawer({
     Key? key,
     this.tiles,

@@ -106,7 +106,9 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
           Row(
             children: [
               AnimatedContainer(
-                duration: widget.duration,
+                duration: widget.controller.moving
+                    ? const Duration()
+                    : widget.duration,
                 width: opened ? sideBarPos : 0,
                 height: widget.constraints.maxHeight - widget.appBarHeight,
                 decoration: BoxDecoration(
@@ -114,12 +116,13 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
                   border: Border(right: widget.desktop.border),
                 ),
                 onEnd: () {
-                  widget.controller.movingToFalse();
+                  // print('changing');
+                  widget.controller.movingToTrue();
                 },
                 child: AnimatedBuilder(
                   animation: widget.controller,
                   builder: (context, child) {
-                    return (sideBarPos == 0 || widget.controller.moving)
+                    return (sideBarPos == 0 || !widget.controller.moving)
                         ? const SizedBox()
                         : widget.drawer(
                             Size(
@@ -159,7 +162,8 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
       return Row(
         children: [
           AnimatedContainer(
-            duration: widget.duration,
+            duration:
+                widget.controller.moving ? const Duration() : widget.duration,
             width: opened ? sideBarPos : 0,
             height: widget.constraints.maxHeight,
             decoration: BoxDecoration(
@@ -167,12 +171,12 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
               border: Border(right: widget.desktop.border),
             ),
             onEnd: () {
-              widget.controller.movingToFalse();
+              widget.controller.movingToTrue();
             },
             child: AnimatedBuilder(
               animation: widget.controller,
               builder: (context, child) {
-                return (sideBarPos == 0 || widget.controller.moving)
+                return (sideBarPos == 0 || !widget.controller.moving)
                     ? const SizedBox()
                     : widget.drawer(
                         Size(
@@ -250,11 +254,11 @@ class _EasyDesktopLayoutState extends State<EasyDesktopLayout> {
       } else if (sideBarPos == widget.desktop.previewSize) {
         sideBarPos = 0;
         opened = false;
-        widget.controller.movingToTrue();
+        widget.controller.movingToFalse();
       } else {
         sideBarPos = widget.desktop.sideBarWidth;
         opened = true;
-        widget.controller.movingToTrue();
+        widget.controller.movingToFalse();
       }
     });
   }

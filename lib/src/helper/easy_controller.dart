@@ -9,7 +9,7 @@ class EasyAppController extends ChangeNotifier {
     init();
   }
   late EasyBody body;
-  bool _moving = false;
+  bool _moving = true;
 
   void init() {
     switchBody(intialBody ??

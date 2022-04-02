@@ -107,7 +107,9 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
           Row(
             children: [
               AnimatedContainer(
-                duration: widget.duration,
+                duration: widget.controller.moving
+                    ? const Duration()
+                    : widget.duration,
                 width: opened ? widget.tablet.previewSize : 0,
                 height: widget.constraints.maxHeight - widget.appBarHeight,
                 decoration: BoxDecoration(
@@ -115,12 +117,12 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
                   border: Border(right: widget.tablet.border),
                 ),
                 onEnd: () {
-                  widget.controller.movingToFalse();
+                  widget.controller.movingToTrue();
                 },
                 child: AnimatedBuilder(
                   animation: widget.controller,
                   builder: (context, child) {
-                    return (opened && !widget.controller.moving)
+                    return (opened && widget.controller.moving)
                         ? widget.drawer(
                             Size(
                               widget.tablet.previewSize,
@@ -160,7 +162,8 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
       return Row(
         children: [
           AnimatedContainer(
-            duration: widget.duration,
+            duration:
+                widget.controller.moving ? const Duration() : widget.duration,
             width: opened ? widget.tablet.previewSize : 0,
             height: widget.constraints.maxHeight,
             decoration: BoxDecoration(
@@ -168,12 +171,12 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
               border: Border(right: widget.tablet.border),
             ),
             onEnd: () {
-              widget.controller.movingToFalse();
+              widget.controller.movingToTrue();
             },
             child: AnimatedBuilder(
               animation: widget.controller,
               builder: (context, child) {
-                return (opened && !widget.controller.moving)
+                return (opened && widget.controller.moving)
                     ? widget.drawer(
                         Size(
                           widget.tablet.previewSize,
@@ -250,6 +253,6 @@ class _EasyTabletLayoutState extends State<EasyTabletLayout> {
     setState(() {
       opened = !opened;
     });
-    widget.controller.movingToTrue();
+    widget.controller.movingToFalse();
   }
 }

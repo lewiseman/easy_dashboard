@@ -38,7 +38,7 @@ class DashBoard extends StatelessWidget {
       appBarColor: Colors.teal,
       sideBarColor: Colors.grey.shade100,
       tabletView: const TabletView(
-        fullAppBar: false,
+        fullAppBar: true,
         border: BorderSide(width: 0.5, color: Colors.grey),
       ),
       desktopView: const DesktopView(

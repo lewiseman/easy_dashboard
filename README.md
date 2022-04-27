@@ -1,6 +1,13 @@
-# Easy Dashboard
+<center><h1>Easy Dashboard</h1></center>
 
-[![Pub](https://img.shields.io/pub/v/flutter_snake_navigationbar.svg)](https://pub.dev/packages/flutter_snake_navigationbar)
+<center>
+
+[![Pub](https://img.shields.io/pub/v/easy_dashboard.svg)](https://pub.dev/packages/easy_dashboard)
+</center>
+
+<p align="center">
+  <img alt="easy dashboard", src="https://raw.githubusercontent.com/lewiseman/assets/master/Easy_dashboard_logo.png">
+</p>
 
 Provides an easy way to build dashboard layout for your app , but still yet very customizable .
 

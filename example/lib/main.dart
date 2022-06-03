@@ -1,4 +1,5 @@
 import 'package:easy_dashboard/easy_dashboard.dart';
+import 'package:example/flat_example/flat.dart';
 import 'package:example/temp.dart';
 import 'package:flutter/material.dart';
 
@@ -17,14 +18,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DashBoard(),
+      home: FlatExample()
     );
   }
 }
 
 class DashBoard extends StatelessWidget {
   DashBoard({Key? key}) : super(key: key);
-  late final EasyAppController controller = EasyAppController(
+  late final EasyController controller = EasyController(
     intialBody: EasyBody(child: tile1.body, title: tile1.title),
   );
 
@@ -58,7 +59,7 @@ class DashBoard extends StatelessWidget {
           topWidget: SideBox(
             scrollable: true,
             height: 150,
-            child: topOpenWidget,
+            // child: ListView.builder(itemBuilder: itemBuilder)
           ),
           bottomWidget: SideBox(
             scrollable: false,

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
 class DashBoard extends StatelessWidget {
   DashBoard({Key? key}) : super(key: key);
-  late final EasyController controller = EasyController(
+  late final EasyAppController controller = EasyAppController(
     intialBody: EasyBody(child: tile1.body, title: tile1.title),
   );
 

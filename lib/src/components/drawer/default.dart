@@ -1,8 +1,8 @@
-import 'package:easy_dashboard/src/components/drawer/tile.dart';
-import 'package:easy_dashboard/src/models/body_model.dart';
-import 'package:easy_dashboard/src/models/sidebox_model.dart';
-import 'package:easy_dashboard/src/models/sidetile_model.dart';
-import 'package:easy_dashboard/src/utils/enums.dart';
+import '../../components/drawer/tile.dart';
+import '../../models/body_model.dart';
+import '../../models/sidebox_model.dart';
+import '../../models/sidetile_model.dart';
+import '../../utils/enums.dart';
 import 'package:flutter/material.dart';
 
 class EasyDrawer extends StatefulWidget {

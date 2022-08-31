@@ -1,4 +1,4 @@
-import 'package:easy_dashboard/src/models/body_model.dart';
+import '../models/body_model.dart';
 import 'package:flutter/material.dart';
 
 /// A controller to help with the [EasyDashboard] elements .

@@ -1,4 +1,4 @@
-import 'package:easy_dashboard/src/models/sidetile_model.dart';
+import '../../models/sidetile_model.dart';
 import 'package:flutter/material.dart';
 
 class DrawerTile extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EasyMobileLayout extends StatefulWidget {
-  final EasyAppController controller;
+  final EasyController controller;
   final Duration duration;
   final BoxConstraints constraints;
   final MobileView mobile;

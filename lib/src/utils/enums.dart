@@ -14,3 +14,5 @@ enum ScrollableDrawers {
   both,
   none,
 }
+
+enum EasyNavigationType { flatNavigation }

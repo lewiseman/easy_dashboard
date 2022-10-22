@@ -10,3 +10,4 @@ export 'src/helper/easy_controller.dart';
 export 'src/utils/enums.dart';
 export 'src/components/drawer/default.dart';
 export 'src/components/easy_dashboard.dart';
+export 'src/components/appbars/custom.dart';

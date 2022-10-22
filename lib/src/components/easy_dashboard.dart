@@ -1,4 +1,6 @@
+import 'package:easy_dashboard/src/components/dashboard.dart';
 import 'package:easy_dashboard/src/components/layouts/desktop_layout/default.dart';
+import 'package:easy_dashboard/src/components/layouts/flat_dashboard/root.dart';
 import 'package:easy_dashboard/src/components/layouts/mobile_layout/default.dart';
 import 'package:easy_dashboard/src/components/layouts/tablet_layout.dart/default.dart';
 import 'package:easy_dashboard/src/helper/easy_controller.dart';
@@ -11,9 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EasyDashboard extends StatelessWidget {
-  /// Use [EasyAppController] to control the [EasyDashboard] body widget .
+  /// Use [EasyController] to control the [EasyDashboard] body widget .
   ///  Use this to set the initial body widget.
-  final EasyAppController controller;
+  final EasyController controller;
   final EasyBody? body;
 
   /// The Duration of the animation when the [EasyDashboard] is opened or closed among others.
@@ -201,5 +203,41 @@ class EasyDashboard extends StatelessWidget {
       default:
         return const SizedBox();
     }
+  }
+}
+
+class Easy extends DashBoard {
+  /// Determines what dashboard to show . It is assigned at the end of each constructor .
+  final EasyNavigationType type;
+
+  const Easy.flat({
+    Key? key,
+    super.controller,
+    super.fullAppBar = false,
+    super.appBar,
+    super.body = const SizedBox.shrink(),
+    super.appBarHeight = kToolbarHeight,
+    super.mobileBreakpoint = 600,
+    super.tabletBreakpoint = 900,
+  })  : type = EasyNavigationType.flatNavigation,
+        super(key: key);
+
+  @override
+  Widget buildNavigation(BuildContext context, EasyController controller) {
+    switch (type) {
+      case EasyNavigationType.flatNavigation:
+        return FlatNavigation(
+          key: key,
+        );
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  @override
+  Widget buildBody(BuildContext context) {
+    return Expanded(
+      child: body,
+    );
   }
 }

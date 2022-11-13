@@ -11,6 +11,7 @@ class ExapleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Home(),
     );
   }
@@ -21,27 +22,77 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EasyDashboard(
-      extendedAppBar: false,
-        appBar: AppBar(
-          title: Text('Easy Dashboard'),
-          leading: Builder(builder: (context) {
+    return
+        //  EasyDashboard(
+        //   extendedAppBar: false,
+        //   appBar: AppBar(
+        //     elevation: 0,
+        //     title: Text('Easy Dashboard'),
+        //     leading: Builder(builder: (context) {
+        //       return IconButton(
+        //         onPressed: () {
+        //           EasyDashboard.of(context).drawerAction();
+        //         },
+        //         icon: Icon(Icons.menu),
+        //       );
+        //     }),
+        //     actions: [
+        //       Builder(builder: (context) {
+        //         return IconButton(
+        //           onPressed: () {
+        //             EasyDashboard.of(context).endDrawerAction();
+        //           },
+        //           icon: Icon(Icons.settings),
+        //         );
+        //       })
+        //     ],
+        //   ),
+        //   drawer: Drawer(
+        //     backgroundColor: Colors.black,
+        //   ),
+        //   endDrawer: Drawer(),
+        //   body: Container(
+        //     color: Colors.red,
+        //     child: Center(
+        //       child: Text('Center'),
+        //     ),
+        //   ),
+        // );
+        // EasyDashboard2();
+        EasyDashboard(
+      extendedAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        title: Text('Easy Dashboard'),
+        leading: Builder(builder: (context) {
+          return IconButton(
+            onPressed: () {
+              EasyDashboard.of(context).drawerAction();
+            },
+            icon: Icon(Icons.menu),
+          );
+        }),
+        actions: [
+          Builder(builder: (context) {
             return IconButton(
               onPressed: () {
-                EasyDashboard.of(context).drawerAction();
+                EasyDashboard.of(context).endDrawerAction();
               },
-              icon: Icon(Icons.menu),
+              icon: Icon(Icons.settings),
             );
-          }),
+          })
+        ],
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+      ),
+      endDrawer: Drawer(),
+      body: Container(
+        color: Colors.red,
+        child: Center(
+          child: Text('Center'),
         ),
-        drawer: Drawer(
-          backgroundColor: Colors.black,
-        ),
-        body: Container(
-          color: Colors.red,
-          child: Center(
-            child: Text('Center'),
-          ),
-        ));
+      ),
+    );
   }
 }

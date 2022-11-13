@@ -1,52 +1,69 @@
-import 'package:easy_dashboard/src/models/general.dart';
 import 'package:flutter/material.dart';
+
+import 'models/general.dart';
 
 enum _EasyDashboardSlot { body, appBar, drawer, endDrawer }
 
-enum _EasyDashboardSize { phone, tablet, desktop }
-
 enum _DrawerOveride { none, minimised }
 
+enum _EasyDashboardSize { phone, tablet, desktop }
+
 class _EasyDashboardLayout extends MultiChildLayoutDelegate {
+  final double navBreakpoint;
   final _EasyDashboardSize dashboardSize;
-  final TextDirection textDirection;
   final Size appBarSize;
-  final bool hoveringDrawer;
   final bool extendedAppBar;
   final _DrawerOveride drawerOveride;
+  final bool hoveringDrawer;
   final EasyDashBoardConstraints dashBoardConstraints;
 
   _EasyDashboardLayout({
+    required this.navBreakpoint,
     required this.dashboardSize,
-    required this.dashBoardConstraints,
-    required this.textDirection,
-    required this.extendedAppBar,
     required this.appBarSize,
-    required this.hoveringDrawer,
+    required this.extendedAppBar,
     required this.drawerOveride,
+    required this.hoveringDrawer,
+    required this.dashBoardConstraints,
   });
 
   @override
   void performLayout(Size size) {
-    final bool minimized = drawerOveride == _DrawerOveride.minimised;
     if (hasChild(_EasyDashboardSlot.appBar)) {
       final BoxConstraints appBarConstraints;
-      appBarConstraints = BoxConstraints(
-        maxHeight: appBarSize.height,
-        maxWidth: appBarSize.width,
-      );
+      final Offset positionOffset;
+      if (dashboardSize == _EasyDashboardSize.phone) {
+        appBarConstraints = BoxConstraints(
+          maxHeight: appBarSize.height,
+          maxWidth: size.width,
+        );
+        positionOffset = const Offset(0, 0);
+      } else {
+        appBarConstraints = BoxConstraints(
+          maxHeight: appBarSize.height,
+          maxWidth: extendedAppBar
+              ? size.width
+              : hoveringDrawer
+                  ? appBarSize.width
+                  : size.width - navBreakpoint,
+        );
+        positionOffset = positionOffset = Offset(
+          extendedAppBar
+              ? 0
+              : hoveringDrawer
+                  ? size.width - appBarSize.width
+                  : navBreakpoint,
+          0,
+        );
+      }
       layoutChild(_EasyDashboardSlot.appBar, appBarConstraints);
       positionChild(
         _EasyDashboardSlot.appBar,
-        Offset(
-          size.width - appBarSize.width,
-          0,
-        ),
+        positionOffset,
       );
     }
 
     if (hasChild(_EasyDashboardSlot.body)) {
-      // print('object $dashboardSize  ${size.width}');
       final BoxConstraints bodyConstraints;
       final Offset positionOffset;
       if (dashboardSize == _EasyDashboardSize.phone) {
@@ -54,31 +71,32 @@ class _EasyDashboardLayout extends MultiChildLayoutDelegate {
           maxHeight: size.height - appBarSize.height,
           maxWidth: size.width,
         );
-        positionOffset = Offset(0.0, appBarSize.height);
+        positionOffset = Offset(0, appBarSize.height);
       } else if (dashboardSize == _EasyDashboardSize.tablet) {
         bodyConstraints = BoxConstraints(
           maxHeight: size.height - appBarSize.height,
-          maxWidth: minimized
-              ? size.width
-              : size.width - dashBoardConstraints.tabletSideBarWidth,
+          maxWidth: hoveringDrawer
+              ? size.width - dashBoardConstraints.tabletSideBarWidth
+              : size.width - navBreakpoint,
         );
         positionOffset = Offset(
-          minimized ? 0 : dashBoardConstraints.tabletSideBarWidth.toDouble(),
+          hoveringDrawer
+              ? dashBoardConstraints.tabletSideBarWidth.toDouble()
+              : navBreakpoint,
           appBarSize.height,
         );
       } else {
         bodyConstraints = BoxConstraints(
           maxHeight: size.height - appBarSize.height,
-          maxWidth: minimized
+          maxWidth: hoveringDrawer
               ? size.width - dashBoardConstraints.tabletSideBarWidth
-              : size.width - dashBoardConstraints.desktopSideBarWidth,
+              : size.width - navBreakpoint,
         );
         positionOffset = Offset(
-          minimized
-              ? dashBoardConstraints.tabletSideBarWidth.toDouble()
-              : dashBoardConstraints.desktopSideBarWidth.toDouble(),
-          appBarSize.height,
-        );
+            hoveringDrawer
+                ? dashBoardConstraints.tabletSideBarWidth.toDouble()
+                : navBreakpoint,
+            appBarSize.height);
       }
 
       layoutChild(_EasyDashboardSlot.body, bodyConstraints);
@@ -87,29 +105,20 @@ class _EasyDashboardLayout extends MultiChildLayoutDelegate {
 
     if (hasChild(_EasyDashboardSlot.drawer)) {
       final BoxConstraints drawerConstraints;
+      final Offset drawerOffset;
       if (dashboardSize == _EasyDashboardSize.phone) {
         drawerConstraints = BoxConstraints.tight(size);
-      } else if (dashboardSize == _EasyDashboardSize.tablet) {
-        drawerConstraints = BoxConstraints(
-          maxWidth: hoveringDrawer ?dashBoardConstraints.desktopSideBarWidth.toDouble() : dashBoardConstraints.tabletSideBarWidth.toDouble(),
-          maxHeight: size.height,
-        );
+        drawerOffset = Offset.zero;
       } else {
         drawerConstraints = BoxConstraints(
-          maxWidth: minimized && !hoveringDrawer
-              ? dashBoardConstraints.tabletSideBarWidth.toDouble()
-              : dashBoardConstraints.desktopSideBarWidth.toDouble(),
-          // maxWidth: 10,
           maxHeight:
               extendedAppBar ? size.height - appBarSize.height : size.height,
+          maxWidth: navBreakpoint,
         );
+        drawerOffset = Offset(0, extendedAppBar ? appBarSize.height : 0);
       }
-      print(hoveringDrawer);
       layoutChild(_EasyDashboardSlot.drawer, drawerConstraints);
-      positionChild(
-        _EasyDashboardSlot.drawer,
-        Offset(0, extendedAppBar ? appBarSize.height : 0),
-      );
+      positionChild(_EasyDashboardSlot.drawer, drawerOffset);
     }
 
     if (hasChild(_EasyDashboardSlot.endDrawer)) {
@@ -119,9 +128,9 @@ class _EasyDashboardLayout extends MultiChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(_EasyDashboardLayout oldDelegate) {
-    return oldDelegate.drawerOveride != drawerOveride ||
-        oldDelegate.hoveringDrawer != hoveringDrawer;
+  bool shouldRelayout(covariant _EasyDashboardLayout oldDelegate) {
+    return oldDelegate.navBreakpoint != navBreakpoint;
+    // return true;
   }
 }
 
@@ -138,12 +147,12 @@ class EasyDashboard extends StatefulWidget {
     super.key,
     this.backgroundColor,
     this.body,
+    this.appBar,
     this.drawer,
     this.endDrawer,
     this.extendedAppBar = false,
-    this.restorationId,
-    this.appBar,
     this.dashBoardConstraints = const EasyDashBoardConstraints(),
+    this.restorationId,
   });
 
   static EasyDashboardState of(BuildContext context) {
@@ -164,7 +173,8 @@ class EasyDashboard extends StatefulWidget {
   State<EasyDashboard> createState() => EasyDashboardState();
 }
 
-class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
+class EasyDashboardState extends State<EasyDashboard>
+    with SingleTickerProviderStateMixin, RestorationMixin {
   final GlobalKey<DrawerControllerState> _drawerKey =
       GlobalKey<DrawerControllerState>();
   final GlobalKey<DrawerControllerState> _endDrawerKey =
@@ -172,36 +182,49 @@ class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
 
   final RestorableBool _drawerOpened = RestorableBool(false);
   final RestorableBool _endDrawerOpened = RestorableBool(false);
-  _EasyDashboardSize? _dashboardSize;
-  _DrawerOveride _drawerOveride = _DrawerOveride.none;
-  bool _hoverinDrawer = false;
 
-  void _drawerOpenedCallback(bool isOpened) {
-    if (_drawerOpened.value != isOpened) {
-      setState(() {
-        _drawerOpened.value = isOpened;
-      });
-    }
+  late AnimationController _animationController;
+
+  _EasyDashboardSize? _dashboardSize;
+  double? navigationEndPoint;
+  bool _hoverinDrawer = false;
+  _DrawerOveride _drawerOveride = _DrawerOveride.none;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+    _animationController.addListener(_buildAnimation);
   }
 
-  void _endDrawerOpenedCallback(bool isOpened) {
-    if (_endDrawerOpened.value != isOpened) {
-      setState(() {
-        _endDrawerOpened.value = isOpened;
-      });
-    }
+  _buildAnimation() {
+    setState(() {
+      navigationEndPoint = _animationController.value *
+          widget.dashBoardConstraints.desktopSideBarWidth;
+    });
   }
 
   void drawerAction() {
-    if (_dashboardSize != null) {
-      if (_dashboardSize == _EasyDashboardSize.phone) {
-        _openDrawer();
+    if (_dashboardSize == _EasyDashboardSize.phone) {
+      _openDrawer();
+    } else {
+      if (_drawerOveride == _DrawerOveride.none) {
+        _drawerOveride = _DrawerOveride.minimised;
+        if (_dashboardSize == _EasyDashboardSize.tablet) {
+          _animationController.animateTo(0);
+        } else {
+          goToHalf();
+        }
       } else {
-        setState(() {
-          _drawerOveride = (_drawerOveride == _DrawerOveride.none)
-              ? _DrawerOveride.minimised
-              : _DrawerOveride.none;
-        });
+        _drawerOveride = _DrawerOveride.none;
+        if (_dashboardSize == _EasyDashboardSize.tablet) {
+          goToHalf();
+        } else {
+          _animationController.forward();
+        }
       }
     }
   }
@@ -222,15 +245,13 @@ class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('rebuilding $_drawerOveride');
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final ThemeData themeData = Theme.of(context);
-    final List<LayoutId> children = <LayoutId>[];
-    final TextDirection textDirection = Directionality.of(context);
-
-    _dashboardSize = _calDashboardSize(mediaQuery.size);
-
     Size appBarSize = Size.zero;
+    final List<LayoutId> children = <LayoutId>[];
+    _EasyDashboardSize buildDashSize = _calDashboardSize(mediaQuery.size);
+    _updateNavBreakPoint(buildDashSize);
+    _dashboardSize = buildDashSize;
 
     if (widget.body != null) {
       children.add(
@@ -274,22 +295,38 @@ class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
         ),
       );
     }
-
-    return Material( 
+    return Material(
       color: widget.backgroundColor ?? themeData.scaffoldBackgroundColor,
       child: CustomMultiChildLayout(
         delegate: _EasyDashboardLayout(
+          extendedAppBar: widget.extendedAppBar,
+          navBreakpoint:
+              navigationEndPoint ?? _calcInitialNavBreakpoint(_dashboardSize!),
           dashboardSize: _dashboardSize!,
           drawerOveride: _drawerOveride,
-          dashBoardConstraints: widget.dashBoardConstraints,
-          textDirection: textDirection,
-          hoveringDrawer: _hoverinDrawer,
-          extendedAppBar: widget.extendedAppBar,
           appBarSize: appBarSize,
+          dashBoardConstraints: widget.dashBoardConstraints,
+          hoveringDrawer: _hoverinDrawer,
         ),
         children: children,
       ),
     );
+  }
+
+  void _drawerOpenedCallback(bool isOpened) {
+    if (_drawerOpened.value != isOpened) {
+      setState(() {
+        _drawerOpened.value = isOpened;
+      });
+    }
+  }
+
+  void _endDrawerOpenedCallback(bool isOpened) {
+    if (_endDrawerOpened.value != isOpened) {
+      setState(() {
+        _endDrawerOpened.value = isOpened;
+      });
+    }
   }
 
   void _buildDrawer(List<LayoutId> children) {
@@ -306,39 +343,47 @@ class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
           ),
         ),
       );
-    } else if (_dashboardSize == _EasyDashboardSize.tablet &&
-        _drawerOveride == _DrawerOveride.minimised) {
-      return;
-    } else if ((_dashboardSize == _EasyDashboardSize.tablet &&
-            _drawerOveride == _DrawerOveride.none) ||
-        (_dashboardSize == _EasyDashboardSize.desktop &&
-            _drawerOveride == _DrawerOveride.minimised)) {
-      children.add(
-        LayoutId(
-          id: _EasyDashboardSlot.drawer,
-          child: MouseRegion(
-            onEnter: (event) {
-              setState(() {
-                _hoverinDrawer = true;
-              });
-            },
-            onExit: (event) {
-              setState(() {
-                _hoverinDrawer = false;
-              });
-            },
-            child: widget.drawer!,
-          ),
-        ),
-      );
     } else {
       children.add(
         LayoutId(
           id: _EasyDashboardSlot.drawer,
-          child: widget.drawer!,
+          child: (_dashboardSize == _EasyDashboardSize.tablet &&
+                      _drawerOveride == _DrawerOveride.none) ||
+                  (_dashboardSize == _EasyDashboardSize.desktop &&
+                      _drawerOveride == _DrawerOveride.minimised)
+              ? MouseRegion(
+                  onEnter: (event) {
+                    _hoverinDrawer = true;
+                    _animationController.forward();
+                  },
+                  onExit: (event) {
+                    goToHalf().then((value) => _hoverinDrawer = false);
+                  },
+                  child: widget.drawer!,
+                )
+              : widget.drawer!,
         ),
       );
     }
+  }
+
+  _updateNavBreakPoint(_EasyDashboardSize dsize) {
+    if (_dashboardSize != null && _dashboardSize != dsize) {
+      if (dsize == _EasyDashboardSize.tablet &&
+          _dashboardSize == _EasyDashboardSize.desktop) {
+        goToHalf();
+      } else if (_dashboardSize == _EasyDashboardSize.tablet &&
+          dsize == _EasyDashboardSize.desktop) {
+        _animationController.forward();
+      }
+    }
+  }
+
+  Future<void> goToHalf() async {
+    await _animationController.animateTo(
+      widget.dashBoardConstraints.tabletSideBarWidth /
+          widget.dashBoardConstraints.desktopSideBarWidth,
+    );
   }
 
   num _calAppBarSizeNegation(_EasyDashboardSize dashtype, Size size) {
@@ -359,11 +404,27 @@ class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
     final double width = size.width;
     if (width < widget.dashBoardConstraints.tabletBreakPoint) {
       return _EasyDashboardSize.phone;
-    } else if (width > widget.dashBoardConstraints.tabletBreakPoint &&
+    } else if (width >= widget.dashBoardConstraints.tabletBreakPoint &&
         width < widget.dashBoardConstraints.desktopBreakPoint) {
       return _EasyDashboardSize.tablet;
     } else {
       return _EasyDashboardSize.desktop;
+    }
+  }
+
+  double _calcInitialNavBreakpoint(_EasyDashboardSize dashbdSize) {
+    if (dashbdSize == _EasyDashboardSize.desktop) {
+      navigationEndPoint =
+          widget.dashBoardConstraints.desktopSideBarWidth.toDouble();
+      _animationController.value = 1;
+      return navigationEndPoint!;
+    } else {
+      navigationEndPoint =
+          widget.dashBoardConstraints.tabletSideBarWidth.toDouble();
+      _animationController.value =
+          widget.dashBoardConstraints.tabletSideBarWidth /
+              widget.dashBoardConstraints.desktopSideBarWidth;
+      return navigationEndPoint!;
     }
   }
 

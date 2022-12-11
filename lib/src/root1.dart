@@ -195,7 +195,7 @@ class EasyDashboardState extends State<EasyDashboard>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
     );
     _animationController.addListener(_buildAnimation);
   }

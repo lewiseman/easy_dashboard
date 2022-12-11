@@ -104,7 +104,6 @@ class _EasyDashboardLayout extends MultiChildLayoutDelegate {
               extendedAppBar ? size.height - appBarSize.height : size.height,
         );
       }
-      print(hoveringDrawer);
       layoutChild(_EasyDashboardSlot.drawer, drawerConstraints);
       positionChild(
         _EasyDashboardSlot.drawer,
@@ -222,7 +221,6 @@ class EasyDashboardState extends State<EasyDashboard> with RestorationMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('rebuilding $_drawerOveride');
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final ThemeData themeData = Theme.of(context);
     final List<LayoutId> children = <LayoutId>[];

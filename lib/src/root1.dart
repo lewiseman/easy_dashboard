@@ -1,3 +1,4 @@
+import 'package:easy_dashboard/src/sidebar.dart';
 import 'package:flutter/material.dart';
 
 import 'models/general.dart';
@@ -330,6 +331,9 @@ class EasyDashboardState extends State<EasyDashboard>
   }
 
   void _buildDrawer(List<LayoutId> children) {
+    sidewidget({required bool isExpanded}) => EDrawer(
+          isExpanded: isExpanded,
+        );
     if (_dashboardSize == _EasyDashboardSize.phone) {
       children.add(
         LayoutId(
@@ -339,7 +343,7 @@ class EasyDashboardState extends State<EasyDashboard>
             alignment: DrawerAlignment.start,
             drawerCallback: _drawerOpenedCallback,
             isDrawerOpen: _drawerOpened.value,
-            child: widget.drawer!,
+            child: sidewidget(isExpanded: true),
           ),
         ),
       );
@@ -355,13 +359,14 @@ class EasyDashboardState extends State<EasyDashboard>
                   onEnter: (event) {
                     _hoverinDrawer = true;
                     _animationController.forward();
+                    print(_hoverinDrawer);
                   },
                   onExit: (event) {
                     goToHalf().then((value) => _hoverinDrawer = false);
                   },
-                  child: widget.drawer!,
+                  child: sidewidget(isExpanded: _hoverinDrawer)
                 )
-              : widget.drawer!,
+              : sidewidget(isExpanded: true),
         ),
       );
     }

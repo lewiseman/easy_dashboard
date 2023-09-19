@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EDrawer extends StatelessWidget {
@@ -10,7 +11,7 @@ class EDrawer extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       color: Colors.white,
-      child: Scrollbar(
+      child: CupertinoScrollbar(
         child: ListView(
           children: [..._head, ..._body, ..._foot],
         ),
